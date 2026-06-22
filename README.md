@@ -38,13 +38,14 @@ day), a notice is shown instead of a broken image.
 - `styles.css` — mobile-first styling (light/dark)
 - `app.js` — dropdown population, ordering, and chart URL logic
 - `data.js` — generated region/city data
-- `.github/workflows/deploy.yml` — GitHub Pages deployment
 
 ## Deploying to GitHub Pages
 
-1. In the repository, go to **Settings → Pages**.
-2. Under **Build and deployment → Source**, choose **GitHub Actions**.
-3. Merge this branch into `main` (or run the **Deploy to GitHub Pages**
-   workflow manually via *Actions → Run workflow*).
+The site is served directly from the `main` branch (no build step):
 
-The site then publishes at `https://<owner>.github.io/<repo>/`.
+1. In the repository, go to **Settings → Pages**.
+2. Under **Build and deployment → Source**, choose **Deploy from a branch**.
+3. Set **Branch** to `main` and the folder to **/ (root)**, then **Save**.
+
+The site then publishes at `https://<owner>.github.io/<repo>/` within a minute
+or two.
