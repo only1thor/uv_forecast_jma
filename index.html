@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b3d66" />
+  <title>JMA UV Index — Japan</title>
+  <meta name="description" content="Mobile-friendly view of the Japan Meteorological Agency (JMA) UV index forecast." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>UV Index</h1>
+    <p class="subtitle">Japan Meteorological Agency forecast</p>
+  </header>
+
+  <main class="app-main">
+    <section class="controls" aria-label="Forecast options">
+      <div class="field">
+        <label for="select-type">Chart</label>
+        <select id="select-type"></select>
+      </div>
+      <div class="field">
+        <label for="select-region">Region</label>
+        <select id="select-region"></select>
+      </div>
+      <div class="field field--city">
+        <label for="select-city">City</label>
+        <select id="select-city"></select>
+      </div>
+    </section>
+
+    <section class="valid-for" aria-live="polite">
+      <span class="valid-label">Valid for</span>
+      <span class="valid-date" id="valid-date">—</span>
+    </section>
+
+    <section class="chart-wrap">
+      <div class="chart-status" id="chart-status" hidden></div>
+      <img id="chart" class="chart-img" alt="" />
+    </section>
+
+    <p class="source">
+      Data: <a id="source-link" href="https://www.data.jma.go.jp/env/uvindex/en/uvtrans.html" target="_blank" rel="noopener">Japan Meteorological Agency</a>
+    </p>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
