@@ -56,4 +56,4 @@ The app is four files that load in sequence:
 
 ## Deployment
 
-Push to `main`. GitHub Pages serves the root directory directly — no build action needed.
+Push directly to `main`. GitHub Pages serves the root directory and deploys automatically within a minute or two. There is no staging environment — the live site at https://only1thor.github.io/uv_forecast_jma/ is how changes are verified, so always push to `main` to make new work visible.
