@@ -3,6 +3,8 @@
 A mobile-friendly, static single-page view of the [Japan Meteorological Agency
 (JMA) UV index forecast](https://www.data.jma.go.jp/env/uvindex/en/uvtrans.html).
 
+**Live site: https://only1thor.github.io/uv_forecast_jma/**
+
 Pick a **chart type**, **region**, and **city**; the forecast chart for **today**
 (Japan Standard Time) is shown. There is no server — the page links directly to
 JMA's published chart images.
