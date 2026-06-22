@@ -180,22 +180,42 @@ select:focus {
 .explainer[open] > summary::after { content: "\2212"; } /* minus sign */
 .explainer[open] > summary { border-bottom: 1px solid var(--border); }
 
-.explainer-list {
-  margin: 0;
+.explainer-content {
   padding: 12px 16px 16px;
+}
+.explainer-content h3 {
+  margin: 14px 0 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--ink);
+}
+.explainer-content h3:first-child { margin-top: 0; }
+.explainer-content p {
+  margin: 0 0 12px;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.explainer-list {
+  margin: 0 0 12px;
+  padding: 0;
 }
 .explainer-list dt {
   font-weight: 600;
   font-size: 0.9rem;
-  margin-top: 12px;
+  margin-top: 8px;
 }
 .explainer-list dt:first-child { margin-top: 0; }
 .explainer-list dd {
-  margin: 4px 0 0;
-  font-size: 0.86rem;
+  margin: 3px 0 0;
+  font-size: 0.85rem;
   color: var(--muted);
   line-height: 1.5;
 }
+.explainer-list:last-child { margin-bottom: 0; }
 
 @media (min-width: 560px) {
   .controls {
