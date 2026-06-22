@@ -17,6 +17,8 @@
 
   var DEFAULT_REGION_CODE = "000"; // Japan (all cities)
   var DEFAULT_CITY = "Tokyo";
+  var DEFAULT_CITY_IDX = D.placeName.indexOf(DEFAULT_CITY);
+  var DEFAULT_TYPE = "U";
 
   var els = {
     type: document.getElementById("select-type"),
@@ -63,6 +65,43 @@
     return list ? list.slice() : [];
   }
 
+  // --- URL state (query params for bookmarking) --------------------------
+  // chart=U|C|A, region=<3-digit code>, city=<place index>
+  function getParam(name) {
+    var m = new RegExp("[?&]" + name + "=([^&]*)").exec(window.location.search);
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+
+  function readState() {
+    var type = getParam("chart");
+    if (!CHART_TYPES.some(function (t) { return t.id === type; })) {
+      type = DEFAULT_TYPE;
+    }
+
+    var region = getParam("region");
+    if (!D.regions.some(function (r) { return r.code === region; })) {
+      region = DEFAULT_REGION_CODE;
+    }
+
+    var regionCities = cityIndicesForRegion(region);
+    var city = parseInt(getParam("city"), 10);
+    if (isNaN(city) || regionCities.indexOf(city) === -1) {
+      city = regionCities.indexOf(DEFAULT_CITY_IDX) !== -1
+        ? DEFAULT_CITY_IDX
+        : (regionCities.length ? regionCities[0] : null);
+    }
+
+    return { type: type, region: region, city: city };
+  }
+
+  // Reflect the current selection in the URL without adding history entries.
+  function writeState() {
+    var params = "?chart=" + els.type.value +
+      "&region=" + els.region.value +
+      "&city=" + els.city.value;
+    window.history.replaceState(null, "", params);
+  }
+
   // --- Dropdown population ------------------------------------------------
   function populateTypes() {
     CHART_TYPES.forEach(function (t) {
@@ -83,7 +122,7 @@
     els.region.value = DEFAULT_REGION_CODE;
   }
 
-  function populateCities(preferredName) {
+  function populateCities(preferredIdx) {
     var ordered = orderCities(cityIndicesForRegion(els.region.value));
     els.city.innerHTML = "";
     ordered.forEach(function (i) {
@@ -93,12 +132,10 @@
       els.city.appendChild(o);
     });
 
-    // Keep the current city if the new region still contains it,
-    // otherwise fall back to a preferred default, otherwise first entry.
-    var wantIdx = -1;
-    if (preferredName) wantIdx = D.placeName.indexOf(preferredName);
-    if (wantIdx !== -1 && ordered.indexOf(wantIdx) !== -1) {
-      els.city.value = String(wantIdx);
+    // Keep the preferred city when the region still contains it,
+    // otherwise fall back to the first entry.
+    if (preferredIdx != null && ordered.indexOf(preferredIdx) !== -1) {
+      els.city.value = String(preferredIdx);
     } else {
       els.city.value = els.city.options.length ? els.city.options[0].value : "";
     }
@@ -132,6 +169,7 @@
   function render() {
     els.validDate.textContent = validLabel;
     updateSourceLink();
+    writeState();
 
     var placeIdx = parseInt(els.city.value, 10);
     if (isNaN(placeIdx)) {
@@ -167,14 +205,18 @@
   els.type.addEventListener("change", render);
   els.region.addEventListener("change", function () {
     // Preserve the selected city across region changes when possible.
-    var currentName = els.city.value !== "" ? D.placeName[parseInt(els.city.value, 10)] : null;
-    populateCities(currentName);
+    var currentIdx = els.city.value !== "" ? parseInt(els.city.value, 10) : null;
+    populateCities(currentIdx);
     render();
   });
   els.city.addEventListener("change", render);
 
+  // Initialise from the URL so bookmarked selections are restored.
+  var state = readState();
   populateTypes();
   populateRegions();
-  populateCities(DEFAULT_CITY);
+  els.type.value = state.type;
+  els.region.value = state.region;
+  populateCities(state.city);
   render();
 })();
