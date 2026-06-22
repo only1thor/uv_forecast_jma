@@ -15,6 +15,16 @@
   </header>
 
   <main class="app-main">
+    <section class="chart-wrap">
+      <div class="chart-status" id="chart-status" hidden></div>
+      <img id="chart" class="chart-img" alt="" />
+    </section>
+
+    <section class="valid-for" aria-live="polite">
+      <span class="valid-label">Valid for</span>
+      <span class="valid-date" id="valid-date">—</span>
+    </section>
+
     <section class="controls" aria-label="Forecast options">
       <div class="field">
         <label for="select-type">Chart</label>
@@ -28,16 +38,6 @@
         <label for="select-city">City</label>
         <select id="select-city"></select>
       </div>
-    </section>
-
-    <section class="valid-for" aria-live="polite">
-      <span class="valid-label">Valid for</span>
-      <span class="valid-date" id="valid-date">—</span>
-    </section>
-
-    <section class="chart-wrap">
-      <div class="chart-status" id="chart-status" hidden></div>
-      <img id="chart" class="chart-img" alt="" />
     </section>
 
     <details class="explainer">
